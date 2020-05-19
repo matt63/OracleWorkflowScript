@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# test for testing
+if [ -z "$1" ]; then
+	echo "To test this script use this syntax:  $0 test xxxx.sql"
+	echo "Make sure you have exported orahome and databasesid variables as well"
+	exit 0
+fi
+
 # You don't need to set any variables unless you are manually running this script
 # ORACLE_SID is learned from env variable databasesid that exists during mount, but not manual test
 # ORACLE_HOME is learned from env variable orahome that exists only during certain parts of mount, but not manual test
@@ -24,11 +31,7 @@ su -m oracle -c "$oraclecommand"
 }
 
 
-# test for testing
-if [ -z "$1" ]; then
-	echo "To test this script use this syntax:  $0 test"
-	exit 0
-fi
+
 
 # this part of the script ensures we run the masking during a ount after the database is started on the direct mount server
 if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
