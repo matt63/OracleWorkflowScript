@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# unhash the env command below if you are having problems running the script as you can see what env existed in that phase
+# env
+
 # test for testing
 if [ -z "$1" ]; then
 	echo "To test this script use this syntax:  $0 test xxxx.sql"
@@ -30,16 +33,11 @@ echo "$oraclecommand"
 su -m oracle -c "$oraclecommand"
 }
 
-
-
-
 # this part of the script ensures we run the masking during a ount after the database is started on the direct mount server
 if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
         workflowfunc
         exit $?
 fi
-
-
 
 # this part of the script ensures we run the masking during a scrub mount after the database is started on the scrubbing server
 if [ "$ACT_MULTI_OPNAME" == "scrub-mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
