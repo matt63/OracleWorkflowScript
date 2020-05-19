@@ -49,13 +49,13 @@ echo "$oraclecommand"
 su -m oracle -c "$oraclecommand"
 }
 
-# this part of the script ensures we run the masking during a mount 
+# this part of the script ensures we run the SQL script during a mount after the DB is mounted
 if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
         workflowfunc
         exit $?
 fi
 
-# this part of the script ensures we run the masking during a scrub mount 
+# this part of the script ensures we run the SQL script during a scrub mount after the DB is mounted
 if [ "$ACT_MULTI_OPNAME" == "scrub-mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
         workflowfunc
         exit $?
