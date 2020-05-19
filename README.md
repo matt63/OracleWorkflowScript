@@ -13,3 +13,14 @@ To manually test outside a workflow (where the DB is already mounted) do the fol
 1.  Set databasesid variable (the SID of the Oracle DB),  e.g.   export databasesid=demodb
 1.  Run the sh script using this syntax (change .sh script and .sql script names to suit):    ./workflow.sh test workflow.sql
 
+# Running as a superscript
+
+You can run this script in a superscript in the post phase by adding the following where you change the name of the workflow.sh and worfklow.sql to match.  The phase must be POST:
+
+~~~
+-script "name=workflow.sh:phase=POST:args=workflow.sql"
+~~~
+A complete mount command would look something like this:
+~~~
+udstask mountimage -image Image_8337138 -host orademodb -restoreoption 'provisioningoptions=<provisioning-options><databasesid>avtest</databasesid><username>oracle</username><orahome>/u01/app/oracle/product/11.2.0.4/ora_1</orahome><nonid>false</nonid><noarchivemode>false</noarchivemode><clearlog>false</clearlog><notnsupdate>false</notnsupdate><nooratabupdate>false</nooratabupdate><rrecovery>true</rrecovery><useexistingorapw>false</useexistingorapw></provisioning-options>' -nowait -script "name=workflow.sh:phase=POST:args=workflow.sql"
+~~~
