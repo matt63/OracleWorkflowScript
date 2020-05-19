@@ -6,7 +6,9 @@
 # test for testing
 if [ -z "$1" ]; then
 	echo "To test this script use this syntax:  $0 test xxxx.sql"
-	echo "Make sure you have exported orahome and databasesid variables as well"
+	echo "Make sure you have exported orahome and databasesid variables as well with syntax like:"
+	echo "export orahome=<oracle home dir>"
+	echo "export databasesid=<SID of mounted Oracle DB>"
 	exit 0
 fi
 
@@ -17,15 +19,29 @@ fi
 
 #  if $2 is not set then the sql script name will be empty
 if [ -z "$2" ]; then
-	echo "The $2 variable which defines the SQL script to be run was not passed to the script"
-	echo "In a workflow you need to put the SQL file name after the script name"
-	exit 1
+        echo "The variable which defines the SQL script to be run was not passed to the script"
+        echo "In a workflow you need to put the SQL file name after the script name"
+	echo "If manually executing put the SQL file name after the word test, for example:"
+	echo "$0 test workflow.sql"
+        exit 1
+fi
+# now check that the SQL file exists
+if [ -f /act/scripts/$2 ]; then
+        sqlscriptname=$(echo "$2")
 else
-	sqlscriptname=$(echo "$2")
+        echo "The file specified $2 does not exist as /act/scripts/$2"
+        echo "Please check that the correct file was specified"
+        exit 1
 fi
 
 workflowfunc()
 {
+if [ -z "$orahome" ] || [ -z "$databasesid" ];then
+	echo "Make sure you have exported orahome and databasesid variables as well with syntax like:"
+	echo "export orahome=<oracle home dir>"
+	echo "export databasesid=<SID of mounted Oracle DB>"
+	exit 1
+fi
 ORACLE_HOME=$orahome
 ORACLE_SID=$databasesid
 oraclecommand="cd /act/scripts;export ORACLE_HOME=$ORACLE_HOME;export ORACLE_SID=$ORACLE_SID;export PATH=$ORACLE_HOME/bin:$PATH;ORAENV_ASK=NO;sqlplus / as sysdba @/act/scripts/$sqlscriptname;exit"
@@ -33,13 +49,13 @@ echo "$oraclecommand"
 su -m oracle -c "$oraclecommand"
 }
 
-# this part of the script ensures we run the masking during a ount after the database is started on the direct mount server
+# this part of the script ensures we run the masking during a mount 
 if [ "$ACT_MULTI_OPNAME" == "mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
         workflowfunc
         exit $?
 fi
 
-# this part of the script ensures we run the masking during a scrub mount after the database is started on the scrubbing server
+# this part of the script ensures we run the masking during a scrub mount 
 if [ "$ACT_MULTI_OPNAME" == "scrub-mount" ] && [ "$ACT_MULTI_END" == "true" ] && [ "$ACT_PHASE" == "post" ]; then
         workflowfunc
         exit $?
