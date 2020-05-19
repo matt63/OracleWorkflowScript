@@ -15,7 +15,7 @@ To manually test outside a workflow (where the DB is already mounted) do the fol
 
 # Running as a superscript
 
-You can run this script in a superscript in the post phase by adding the following where you change the name of the workflow.sh and worfklow.sql to match.  The phase must be POST:
+You can run this script in a superscript in the post phase by adding the following where you change the name of the workflow.sh and workflow.sql to match.  The phase must be POST:
 
 ~~~
 -script "name=workflow.sh:phase=POST:args=workflow.sql"
