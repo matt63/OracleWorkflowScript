@@ -6,9 +6,10 @@
 # test for testing
 if [ -z "$1" ]; then
 	echo "To test this script use this syntax:  $0 test xxxx.sql"
-	echo "Make sure you have exported orahome and databasesid variables as well with syntax like:"
+	echo "Make sure you have exported orahome, databasesid and username variables as well with syntax like:"
 	echo "export orahome=<oracle home dir>"
 	echo "export databasesid=<SID of mounted Oracle DB>"
+	echo "export username=oracle"
 	exit 0
 fi
 
@@ -37,16 +38,18 @@ fi
 workflowfunc()
 {
 if [ -z "$orahome" ] || [ -z "$databasesid" ];then
-	echo "Make sure you have exported orahome and databasesid variables as well with syntax like:"
+	echo "Make sure you have exported orahome, databasesid and username variables as well with syntax like:"
 	echo "export orahome=<oracle home dir>"
 	echo "export databasesid=<SID of mounted Oracle DB>"
+	echo "export username=oracle"
 	exit 1
 fi
 ORACLE_HOME=$orahome
 ORACLE_SID=$databasesid
 oraclecommand="cd /act/scripts;export ORACLE_HOME=$ORACLE_HOME;export ORACLE_SID=$ORACLE_SID;export PATH=$ORACLE_HOME/bin:$PATH;ORAENV_ASK=NO;sqlplus / as sysdba @/act/scripts/$sqlscriptname;exit"
+echo "Running the following command as $username:"
 echo "$oraclecommand"
-su -m oracle -c "$oraclecommand"
+su -m $username -c "$oraclecommand"
 }
 
 # this part of the script ensures we run the SQL script during a mount after the DB is mounted
