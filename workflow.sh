@@ -16,6 +16,7 @@ fi
 # You don't need to set any variables unless you are manually running this script
 # ORACLE_SID is learned from env variable databasesid that exists during mount, but not manual test
 # ORACLE_HOME is learned from env variable orahome that exists only during certain parts of mount, but not manual test
+# Oracle user used to run the script is learned from username variable that exists only during certain parts of mount, but not manual test
 # sqlscriptname is learned by $2 passed to script during mount, but not manual test
 
 #  if $2 is not set then the sql script name will be empty
