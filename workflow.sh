@@ -38,7 +38,7 @@ fi
 
 workflowfunc()
 {
-if [ -z "$orahome" ] || [ -z "$databasesid" ];then
+if [ -z "$orahome" ] || [ -z "$databasesid" ] || [ -z "$username" ];then
 	echo "Make sure you have exported orahome, databasesid and username variables as well with syntax like:"
 	echo "export orahome=<oracle home dir>"
 	echo "export databasesid=<SID of mounted Oracle DB>"
