@@ -1,4 +1,4 @@
-# OracleWorkflowScript
+# Oracle Workflow Script
 
 We can automate the execution of a SQL script against an Oracle Virtual database using a workflow:
 
