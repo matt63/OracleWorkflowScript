@@ -15,7 +15,9 @@ To manually test outside a workflow (where the DB is already mounted) do the fol
 
 # su -m is Linux only
 
-The script uses **su -m** to preserve the settings when switching to the Oracle user.   This option does not appear to be supported on non-Linux, so if you get an error, use the AIX version of the script instead.
+The script uses **su -m** to preserve the settings when switching to the Oracle user.   This option does not appear to be supported on non-Linux, so if you get an error, use workflow_AIX.sh instead.  
+
+This script also assumes bash is available on your system.   
 
 # Running as a mount job superscript
 
