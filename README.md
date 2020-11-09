@@ -19,6 +19,10 @@ The script uses **su -m** to preserve the settings when switching to the Oracle 
 
 This script also assumes bash is available on your system.   
 
+# Skip execution if it is a remount situation
+
+Normally script are executed to prepare the database when initially created, and are not to be executed if the DB is remounted for anyt reason (after an unmount operation or due to an automatic remount after a DB server reboot).  Script now takes care of remount and is not executed in that case. 
+
 # Running as a mount job superscript
 
 The method above is for workflows.   You may want to run exactly the same script as part of a regular mount.   In which case we use super-scripts.
